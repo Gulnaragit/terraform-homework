@@ -28,11 +28,11 @@ resource "aws_instance" "web" {
     instance_type = "t2.micro"
     key_name  = aws_key_pair.keypair.key_name
     vpc_security_group_ids = [aws_security_group.allow_tls.id]
-    availability_zone = "${element(var.az,count.index)}"
+    availability_zone = var.az[count.index]
     user_data = file("apache.sh")
     count = 3
     
     tags = {
-        Name = "${element(var.ec2_names,count.index)}"
+      Name = var.ec2_names[count.index]
         }
 }
